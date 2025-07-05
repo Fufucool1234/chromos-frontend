@@ -34,9 +34,12 @@ export default function Home() {
     });
 
     const data = await res.json();
-    if (Array.isArray(data.palette)) {
-      setResponses(data.palette); // ✅ safe array
-    } else {
+if (data?.palette && Array.isArray(data.palette)) {
+  setResponses([data]);
+} else {
+  console.error("Unexpected format:", data);
+  setError("Unexpected backend response.");
+} {
       console.error("Backend returned unexpected format:", data);
       setError("Unexpected response format.");
     }
